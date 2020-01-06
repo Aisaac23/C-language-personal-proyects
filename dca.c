@@ -1,29 +1,39 @@
+/*This program makes a through analysis to find some of the capabalities of a device's implementation. This includes numerical and char types, some basic processing units and a pair of locale settings.
+
+As long as the device supports the #included C standard libraries, you'll be able to get a report of its capabilities. 
+
+As an input you can provide the name of a file; or an empty string "" so all the information will be sent to stdout. 
+
+
+./dca myImplementationCapabilities.txt
+
+*/
 #include <limits.h>
 #include <float.h>
 #include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
 #include <locale.h>
-//This program makes a through analysis to find most of the capabalities of a device's implementation. This includes numerical and char types some basic processing units.
 
-//As long as the device supports the #included C standard libraries, you'll be able to get a report of its capabilities. 
-void deviceCapabilitiesAnalizer( FILE *stream );
+void deviceCapabilitiesAnalizer( char *stream );
 long double factorial(long double n);
 int compareints (const void * a, const void * b);
 
-int main(void)
+int main(int argc, char *argv[])
 {
-	//As an input you can provide a pointer to an open file in write/append mode or NULL so all the information will be sent to stdout
-	//deviceCapabilitiesAnalizer(fopen("myDevice.txt", "a"));
-	deviceCapabilitiesAnalizer(NULL);
+	if(argc == 1)
+		argv[1] = NULL;
+	deviceCapabilitiesAnalizer(argv[1]);
 	return 1;
 }
 
-void deviceCapabilitiesAnalizer(FILE *stream)
+void deviceCapabilitiesAnalizer(char *fileName)
 {
-	
-	if(stream == NULL)
-		stream = stdout;	
+	FILE *stream;
+	if(fileName == NULL)
+		stream = stdout;
+	else
+		stream = fopen(fileName, "a");
 
 	fprintf(stream, "*******Integer and character types*******\n\n");
 	
@@ -178,6 +188,9 @@ void deviceCapabilitiesAnalizer(FILE *stream)
 	locale = setlocale(LC_ALL,"");
 	fprintf(stream, "Current environment's locale: %s\n", locale);
 	locale = setlocale(LC_ALL, NULL);
+
+	if( fileName != NULL )
+		fclose(stream);
 	
 }
 
