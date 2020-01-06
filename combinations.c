@@ -1,3 +1,21 @@
+/*This program takes as arguments: a string of unique characters and a positive integer which represents the size of the group. Then it displays all the posible combinations (no repeated). Example: 
+
+./combinations abcde 3
+output:
+abc
+abd
+abe
+acd
+ace
+ade
+bcd
+bce
+bde
+cde
+
+
+*/ 
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -7,7 +25,6 @@ void combinations(char inputString[], const int groupSize);
 
 int main(int argc, char * argv[])
 {	
-	//This program takes as arguments: a string of unique characters and a positive integer which represents the size of the group.
 	noArguments(argc, argv, "1.0", "Aisaac23");
 	const int tokenSize = atoi(argv[2]);
 	combinations(argv[1], tokenSize);
