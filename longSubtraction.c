@@ -126,16 +126,9 @@ char *longSubtraction(char minuend[], char subtrahend[])
 
 int noArguments(int argc, char * argv[], char* version, char* author)
 {
-	int name = strlen(argv[0]), extension = strchr(argv[0], '.') == NULL ? 0 : strlen(strchr(argv[0], '.'));
-	const int length = name-extension;
-	char textName[length+1];
-	
-	strncpy(textName, argv[0], length);
-	textName[length] = '\0';
 	if(argc <= 1)
 	{
-		
-		printf("\n%s ver %s by %s\n", textName, version, author);
+		printf("\n%s ver %s by %s\n", argv[0], version, author);
 		exit(EXIT_SUCCESS);
 	}
 	else
