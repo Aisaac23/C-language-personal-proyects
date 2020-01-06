@@ -1,28 +1,6 @@
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
 //The following program allows you to calculate from up to 99!
-char* moreThan20Factorial( char factor1[],  char factor2[]);
 
-int main(int argc, char* argv[])
-{
-	char *result; 
-	
-	result = calloc( strlen(argv[1])+1, sizeof(char) );
-	strcpy( result, argv[1] );
-	
-	result = moreThan20Factorial(result, argv[2]);
-	printf("%s! = %s\n", argv[2], result);
-	
-}
 /*
-
-int main(int argc, char* argv[])
-{	
-	result = moreThan20Factorial("1", "90");
-	printf("%s", result);	
-}
-
 The greater N! that you can calculate in an average computer using C (and most of languages) is 20!. This
 is because: 21! > 18,446,774,073,709,551,615 which is 2^64 (unsigned long long).
 
@@ -42,6 +20,25 @@ Please note that this is only for positive integer numbers.
 
 This could also be achieved using integers instead of chars but a char is most of the times 4 times smaller than an integer.
 */
+
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+char* moreThan20Factorial( char factor1[],  char factor2[]);
+
+int main(int argc, char* argv[])
+{
+	char *result; 
+	
+	result = calloc( strlen(argv[1])+1, sizeof(char) );
+	strcpy( result, argv[1] );
+	
+	result = moreThan20Factorial(result, argv[2]);
+	printf("%s! = %s\n", argv[2], result);
+	
+}
+
 char* moreThan20Factorial( char factor1[],  char factor2[])
 {
 	const int factor1Size = strlen(factor1), factor2Size = strlen(factor2);
