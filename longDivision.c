@@ -2,10 +2,16 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
+/*The program receives as arguments, two unsigned integers, first the dividend and then the divisor. The dividend should alwyas be >= the divisor.
+
+This program uses an implementation of the "longSubtraction" program that's way the variable names are the ones of the "longSubtraction".
+
+NOTE: the coutient will replace the dividend, so you may want to copy it to a different location.
+*/
 
 char *longDivision(char *dividend, char divisor[]);
 int noArguments(int argc, char * argv[], char* version, char* author);
-/*The program receives as arguments, two unsigned integers, first the dividend and then the divisor.*/
+
 int main(int argc, char* argv[])
 {
 	noArguments(argc, argv, "1.0", "Aisaac23");
@@ -22,7 +28,7 @@ int main(int argc, char* argv[])
 char *longDivision(char *minuend, char subtrahend[])
 {
 	//With this one I reused the longSubtraction's function code and made some modifications.  
-	unsigned long long minuendSize = strlen(minuend), subtrahendSize = strlen(subtrahend), resultSize, newSize;
+	unsigned long long minuendSize = strlen(minuend), subtrahendSize = strlen(subtrahend), resultSize;
 	int sub, loans;
 	char *result, *absMinuend, *absSubtrahend, *cuotient, minuendDigit[2], subtrahendDigit[2], subChar[2];
 	bool remainderZero = false;
@@ -125,12 +131,8 @@ char *longDivision(char *minuend, char subtrahend[])
 	
 	strcpy(minuend, cuotient);// so the value pointed by the minuend is now our cuotient
 	
-	newSize = strlen(result);
-	result = realloc(result, newSize);
-	
 	free(absSubtrahend);
 	free(absMinuend);
-	free(cuotient);
 
 	return result;
 }
