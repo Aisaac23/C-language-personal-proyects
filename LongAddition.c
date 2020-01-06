@@ -1,7 +1,12 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-/*The program receives as arguments, two unsigned summands*/
+/*The program receives as arguments, two unsigned integers
+
+Example:
+
+./longAddition 343456778384378290000000 34434999588887878867487736273762731116372
+*/
 int noArguments(int argc, char * argv[], char* version, char* author);
 char* longAddition( char* summand1,  char* summand2);
 
