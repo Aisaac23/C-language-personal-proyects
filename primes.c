@@ -1,15 +1,10 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <limits.h>
-#include <stdbool.h>
-#include <math.h>
-#include <time.h>
-
 /*This program takes as an argument a positive integer number and returns an array with all the prime numbers less than or equal.
+
 After the function "allPrimes" returns, the program shows 20 randomly selected primes from the array returned. 
 Important note: the function stores the prime numbers from position 1 of the array, saving in position 0 the total number of primes found.
 
 Example: primes 1844674407
+
 
 output:
 To find and store: 10264907 prime numbers it took... 1465 seconds
@@ -20,6 +15,13 @@ Here are 20 randomly taken from the array:
 67637431
 53918593
 */
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <limits.h>
+#include <stdbool.h>
+#include <math.h>
+#include <time.h>
 
 void delay(unsigned int seconds);
 unsigned long long* allPrimes(unsigned long long top);
