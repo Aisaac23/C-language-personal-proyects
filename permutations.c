@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+/*Uses a pointer to a function to print all posible permutations of a given string with all different characters. "printToken" is a pointer to a function with the porpuse of allowing you to customize the output format and even the destination...
+*/
 void tokenPermutations(unsigned int newSize, char * permutedToken, void (*printToken)( char *token) );
 void printToken(char *token);
 int noArguments(int argc, char * argv[], char* version, char* author);
