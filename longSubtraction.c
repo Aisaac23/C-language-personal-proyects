@@ -1,3 +1,5 @@
+/*The program receives as arguments, two unsigned integers, first the minuend and then the subtrahend.*/
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -5,7 +7,7 @@
 
 char *longSubtraction(char minuend[], char subtrahend[]);
 int noArguments(int argc, char * argv[], char* version, char* author);
-/*The program receives as arguments, two unsigned integers, first the minuend and then the subtrahend.*/
+
 int main(int argc, char* argv[])
 {
 	noArguments(argc, argv, "1.0", "Aisaac23");
