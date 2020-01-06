@@ -1,2 +1,2 @@
 # C-language-snippets-and-proyects
-Interesting snippets built in C language
+Interesting snippets and personal projects built in C language
