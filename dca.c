@@ -1,12 +1,9 @@
 /*This program makes a through analysis to find some of the capabalities of a device's implementation. This includes numerical and char types, some basic processing units and a pair of locale settings.
-
 As long as the device supports the #included C standard libraries, you'll be able to get a report of its capabilities. 
 
 As an input you can provide the name of a file; or an empty string "" so all the information will be sent to stdout. 
 
-
 ./dca myImplementationCapabilities.txt
-
 */
 #include <limits.h>
 #include <float.h>
