@@ -29,9 +29,9 @@ char *longDivision(char *minuend, char subtrahend[])
 {
 	//With this one I reused the longSubtraction's function code and made some modifications.  
 	unsigned long long minuendSize = strlen(minuend), subtrahendSize = strlen(subtrahend), resultSize;
-	int sub, loans;
-	char *result, *absMinuend, *absSubtrahend, *cuotient, minuendDigit[2], subtrahendDigit[2], subChar[2];
+	char *result, *absMinuend, *absSubtrahend, *cuotient, subChar[2];
 	bool remainderZero = false;
+	int sub, loans;
 	
 	resultSize = (minuendSize >= subtrahendSize) ? minuendSize : subtrahendSize;
 	
@@ -47,68 +47,54 @@ char *longDivision(char *minuend, char subtrahend[])
 	memmove( absSubtrahend+(resultSize-subtrahendSize), subtrahend, subtrahendSize*sizeof(char) );	
 
 	absMinuend[resultSize] = result[resultSize] = absSubtrahend[resultSize] = cuotient[resultSize] = '\0';
-	minuendDigit[1] = subtrahendDigit[1] = '\0'; 
-	
-	subtrahendDigit[0] = subtrahend[0];
-	int absSubtrahendFirst = atoi(subtrahendDigit);
+
 	while(!remainderZero )
-	{
-		/***************************************/
-		minuendSize = 0;
-		int minuendFirst = 1;
-		for(long int i = 0; i<resultSize; i++)
-			if(absMinuend[i] == '0')
-				minuendFirst++;
-			else
-				i = resultSize;
-		minuendSize = strlen(absMinuend) - (minuendFirst-1);
-		minuendDigit[0] = absMinuend[ minuendFirst-1 ];
-		
-		/**************************************************/
-		sub = atoi(minuendDigit) - absSubtrahendFirst;
-		if(minuendSize < subtrahendSize || ( minuendSize == subtrahendSize && sub<0 ) )
-			break;
-		
-		for(long int index = resultSize-1; index >= 0; index--)// we subtract from left to right.
+	{		
+		//Subtraction loop, it's practically the same as in "LongSubtraction"
+		unsigned long long int subIndex = resultSize; // we subtract from left to right.
+		do
 		{
-			minuendDigit[0] = absMinuend[index];
-			subtrahendDigit[0] = absSubtrahend[index];
-			
-			sub = atoi(minuendDigit) - atoi(subtrahendDigit);
-			if(sub < 0 && index > 0)
+			subIndex--;	
+			sub = (absMinuend[subIndex] - '0') - (absSubtrahend[subIndex] - '0');
+			if(sub < 0 && subIndex > 0)//case when we have, for example: 54678-9 
 			{
 				sub +=10;
 				
 				int next = 1;
-				subChar[0] = absMinuend[index-next];
-				loans = atoi( subChar );//the one who loans 1
+				loans = absMinuend[subIndex - next] - '0';//the one who loans 1
 				
-				while(loans == 0)
+				while(loans == 0)// when in minuend we have, for exmple: 50008 - 9
 				{
-					sprintf(subChar,"%u", 9);
-					absMinuend[index - next] = subChar[0];
+					absMinuend[ subIndex - next ] = '9';
 					next++;
-					subChar[0] = absMinuend[index-next];
-					loans = atoi( subChar );	
+					loans = absMinuend[ subIndex - next ] - '0';	
 				}
 				sprintf(subChar,"%u", loans-1);
-				absMinuend[index - next] = subChar[0];
+				absMinuend[ subIndex - next ] = subChar[0];
 			}
 			sprintf(subChar,"%u", sub);
-			result[index] = subChar[0];
-		}
+			result[ subIndex ] = subChar[0];
+			
+		}while(subIndex > 0);//subIndex is unsigned so it'd cause a runtime error if it gets to -1
 		/*Here we check if we have a reminder of zero, in that case the we've finished long division*/
+		
+		//printf("%s\n", result);
+		//getchar();		
 		remainderZero = true;
-		for(unsigned long long index = 0; index<resultSize; index++)
+		unsigned long long zeros = 0;
+		for(unsigned long long index = 0; index<resultSize && remainderZero; index++)
 			if( result[index] != '0')
 				remainderZero = false;
+			else
+				zeros++;
 		/**************************************/
 		
 		/*Here we add one to the cuotient, since we've been able to subtract once the subtrahend from the minuend*/
-		long int CuotientIndex = resultSize-1;
+		long int CuotientIndex = resultSize;
 		bool added = false;
-		while( CuotientIndex >= 0 && !added )
+		do
 		{
+			CuotientIndex--;
 			if(cuotient[CuotientIndex] < '9')
 			{
 				cuotient[CuotientIndex]++;
@@ -116,11 +102,17 @@ char *longDivision(char *minuend, char subtrahend[])
 			}
 			else if( CuotientIndex > 0)
 				cuotient[CuotientIndex] = '0';
-			CuotientIndex--;
-		}
-		/*************************************/	
-		strcpy(absMinuend, result);// we use the result of the last result as new minuend
 
+		}while( CuotientIndex > 0 && !added );
+		/*************************************/	
+		
+		strcpy(absMinuend, result);// we use the last result as our new minuend
+		
+		
+		if( resultSize - (zeros) == subtrahendSize )
+			remainderZero = ( ( (absMinuend[zeros]-'0') - (subtrahend[0]-'0') ) < 0 ) ? true: false;
+  		else if( resultSize - (zeros) < subtrahendSize )
+			remainderZero = true;
 	}
 	
 	//most of the times you'll have spare zeros in the left, so we rotate 
