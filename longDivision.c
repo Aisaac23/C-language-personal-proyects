@@ -76,10 +76,8 @@ char *longDivision(char *minuend, char subtrahend[])
 			result[ subIndex ] = subChar[0];
 			
 		}while(subIndex > 0);//subIndex is unsigned so it'd cause a runtime error if it gets to -1
+
 		/*Here we check if we have a reminder of zero, in that case the we've finished long division*/
-		
-		//printf("%s\n", result);
-		//getchar();		
 		remainderZero = true;
 		unsigned long long zeros = 0;
 		for(unsigned long long index = 0; index<resultSize && remainderZero; index++)
@@ -90,7 +88,7 @@ char *longDivision(char *minuend, char subtrahend[])
 		/**************************************/
 		
 		/*Here we add one to the cuotient, since we've been able to subtract once the subtrahend from the minuend*/
-		long int CuotientIndex = resultSize;
+		unsigned long long int CuotientIndex = resultSize;
 		bool added = false;
 		do
 		{
@@ -105,26 +103,35 @@ char *longDivision(char *minuend, char subtrahend[])
 
 		}while( CuotientIndex > 0 && !added );
 		/*************************************/	
-		
+		//printf("%s\n", result);
+		//getchar();
 		strcpy(absMinuend, result);// we use the last result as our new minuend
-		
-		
+		absMinuend[resultSize] = '\0';
+		//Here we check whether the dividend has became a number lower than de divisor
+		int subI = 0;
 		if( resultSize - (zeros) == subtrahendSize )
-			remainderZero = ( ( (absMinuend[zeros]-'0') - (subtrahend[0]-'0') ) < 0 ) ? true: false;
+		{
+			for( zeros=zeros ; zeros < resultSize; zeros++)
+				if( (absMinuend[zeros]-'0') - (subtrahend[subI++]-'0') <= 0 )
+					remainderZero = ( ( (absMinuend[zeros]-'0') - (subtrahend[subI++]-'0') ) < 0 ) ? true: false;
+				else
+					zeros = resultSize;
+		}
   		else if( resultSize - (zeros) < subtrahendSize )
 			remainderZero = true;
 	}
 	
 	//most of the times you'll have spare zeros in the left, so we rotate 
 	while(result[0] == '0' && strlen(result) > 1)
-		memmove(result, result+1, resultSize*sizeof(char)+1);
+		memmove(result, result+1, resultSize*sizeof(char) );
 	while(cuotient[0] == '0' && strlen(result) > 1)
-		memmove(cuotient, cuotient+1, resultSize*sizeof(char)+1);
+		memmove(cuotient, cuotient+1, resultSize*sizeof(char) );
 	
 	strcpy(minuend, cuotient);// so the value pointed by the minuend is now our cuotient
 	
 	free(absSubtrahend);
 	free(absMinuend);
+	free(cuotient);
 
 	return result;
 }
