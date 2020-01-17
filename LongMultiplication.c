@@ -62,15 +62,10 @@ char* longMultiplication( char* factor1,  char* factor2)
 			// we get the product of the multiplication of two factors and its carry
 			longer--;
 			if( f1Size >= f2Size )
-			{
 				product = (factor1[longer]-'0') * (factor2[shorter]-'0');
-				//printf("%c * %c = %u", factor1[longer], factor2[shorter], product);
-			}
 			else
-			{	
 				product = (factor1[shorter]-'0') * (factor2[longer]-'0');
-				//printf("%c * %c = %u", factor1[shorter], factor2[longer], product);
-			}
+
 			carry = (product > 9) ? product/10 : 0;
 			product -= carry*10;
 
