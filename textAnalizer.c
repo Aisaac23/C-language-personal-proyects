@@ -78,7 +78,7 @@ data* analyzeText(wchar_t* inputString, FILE *bigText, char *locale)
 {	
 	data *collection = (data*)calloc(1, sizeof(data));
 	wchar_t ch[2], *mainString, *word, *toTokenize, **tokBuff, number[50];
-	unsigned long long size = 0;
+	unsigned long long size = 0, index = 0;
 	const unsigned int DEFAULT_SIZE = 10000, ASCII_MAX = 127;
 
 	wint_t wc;
@@ -106,7 +106,7 @@ data* analyzeText(wchar_t* inputString, FILE *bigText, char *locale)
 		ch[1] = '\0';
 			rewind(bigText);
 		while((ch[0] = (wchar_t)fgetwc(bigText)) != EOF)
-			wcscat(mainString, ch);
+			mainString[index++] = ch[0];
 		//if it's a file generates a string out of it
 	}
 	else
