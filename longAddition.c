@@ -12,9 +12,14 @@ int noArguments(int argc, char * argv[], char* version, char* author);
 char* longAddition( char* summand1,  char* summand2);
 
 int main(int argc, char* argv[])
-{	char *result;
-	
-	noArguments(argc, argv, "1.0", "Aisaac23");
+{	
+	if(argc < 3)
+	{
+		printf("Thre could be some data missing in: %s\n", argv[0]);
+		exit(EXIT_SUCCESS);
+	}
+
+	char *result;	
 	result = longAddition(argv[1], argv[2]);
 	printf("\nResult: %s\n\n", result);
 	free(result);
@@ -76,15 +81,4 @@ char* longAddition( char* summand1,  char* summand2)
 	result = realloc(result, newSize);
 	
 	return result;
-}
-
-int noArguments(int argc, char * argv[], char* version, char* author)
-{
-	if(argc <= 1)
-	{
-		printf("\n%s ver %s by %s\n", argv[0], version, author);
-		exit(EXIT_SUCCESS);
-	}
-	else
-		return 1;
 }
