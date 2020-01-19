@@ -11,23 +11,14 @@ int noArguments(int argc, char * argv[], char* version, char* author);
 char* longMultiplication( char *factor1,  char *factor2);
 
 int main(int argc, char* argv[])
-{	char *result;
-	/*unsigned long long i = 0;
-	FILE * file = fopen("M82589933.txt","r");
-	char c[2], *str;
-	str = calloc(25000000, sizeof(char));
-	while( i <  100000)
-		if( ( c[0] = fgetc(file) ) == EOF )
-			break;
-		else if( c[0] != '\n')
-		{
-			str[i] = c[0];
-			i++;
-		}
+{	
+	if(argc < 3)
+	{
+		printf("Thre could be some data missing in: %s\n", argv[0]);
+		exit(EXIT_SUCCESS);
+	}
 
-	printf("\nCalculating...\n");
-	result = longMultiplication(str, str);*/
-	noArguments(argc, argv, "1.0", "Aisaac23");
+	char *result;
 	result = longMultiplication(argv[1], argv[2]);
 	printf("\nResult: %s\n\n", result);
 	
@@ -94,15 +85,4 @@ char* longMultiplication( char* factor1,  char* factor2)
 		memmove(result, result+1, resultSize*sizeof(char)+1);
 
 	return result;
-}
-
-int noArguments(int argc, char * argv[], char* version, char* author)
-{
-	if(argc <= 1)
-	{
-		printf("\n%s ver %s by %s\n", argv[0], version, author);
-		exit(EXIT_SUCCESS);
-	}
-	else
-		return 1;
 }
