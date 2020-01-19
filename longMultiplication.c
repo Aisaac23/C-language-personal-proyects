@@ -48,23 +48,23 @@ char* longMultiplication( char* factor1,  char* factor2)
 			result[i] = '0';
 	result[resultSize] = '\0';
 	
-	unsigned long long longer, shorter, resultIndex, units;
-	longer = f1Size >= f2Size ? f1Size : f2Size ;
-	shorter = f2Size <= f1Size ? f2Size : f1Size ;
+	unsigned long long longest, shortest, resultIndex, units;
+	longest = f1Size >= f2Size ? f1Size : f2Size ;
+	shortest = f2Size <= f1Size ? f2Size : f1Size ;
 	units = 0;
 
 	do
 	{
-		shorter--;
+		shortest--;
 		resultIndex = (resultSize-1) - units;		
 		do
 		{
 			// we get the product of the multiplication of two factors and its carry
-			longer--;
+			longest--;
 			if( f1Size >= f2Size )
-				product = (factor1[longer]-'0') * (factor2[shorter]-'0');
+				product = (factor1[longest]-'0') * (factor2[shortest]-'0');
 			else
-				product = (factor1[shorter]-'0') * (factor2[longer]-'0');
+				product = (factor1[shortest]-'0') * (factor2[longest]-'0');
 
 			carry = (product > 9) ? product/10 : 0;
 			product -= carry*10;
@@ -82,13 +82,13 @@ char* longMultiplication( char* factor1,  char* factor2)
 			// we get the product of the multiplication of two factors and its carry
 			result[resultIndex] = (char)(product + '0');
 			resultIndex--; 
-		}while( longer >=1 );
+		}while( longest >=1 );
 		result[resultIndex] = (char)(prevCarry + '0');
 		prevCarry = 0;
 		units++;
-		longer = f1Size >= f2Size ? f1Size : f2Size ;
+		longest = f1Size >= f2Size ? f1Size : f2Size ;
 
-	}while( shorter >= 1 );
+	}while( shortest >= 1 );
 	//most of the times you'll have spare zeros in the left, so we rotate 
 	while(result[0] == '0' && strlen(result) > 1)
 		memmove(result, result+1, resultSize*sizeof(char)+1);
