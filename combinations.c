@@ -13,7 +13,6 @@ bce
 bde
 cde
 
-
 */ 
 
 #include <stdio.h>
@@ -25,7 +24,11 @@ void combinations(char inputString[], const int groupSize);
 
 int main(int argc, char * argv[])
 {	
-	noArguments(argc, argv, "1.0", "Aisaac23");
+	if(argc < 3)
+	{
+		printf("Thre could be some data missing in: %s\n", argv[0]);
+		exit(EXIT_SUCCESS);
+	}
 	const int tokenSize = atoi(argv[2]);
 	combinations(argv[1], tokenSize);
 	
@@ -33,25 +36,28 @@ int main(int argc, char * argv[])
 	return EXIT_SUCCESS;
 }
 
-void combinations(char inputString[], const int groupSize)
+void combinations(char inputString[], const int GROUP_SIZE)
 {
-	int range = groupSize-2, nextTokenBeginAt = groupSize-2, index = groupSize-1, inputSize = strlen(inputString);
-	char token[groupSize+1], newPosition[2];
-	char *position;
+	const int MAX_LENGTH = 95, SKIP_LAST_CHAR = 2;
+	unsigned int range, nextTokenBeginAt, index, inputSize;
+	char token[GROUP_SIZE+1], newPosition[MAX_LENGTH], *position;
 	
+	range = nextTokenBeginAt = GROUP_SIZE-SKIP_LAST_CHAR; 
+	index = GROUP_SIZE-1; 
+	inputSize = strlen(inputString);
 	
-	strncpy(token, inputString, groupSize);
-	token[groupSize] = '\0';
+	strncpy(token, inputString, GROUP_SIZE);
+	token[GROUP_SIZE] = '\0';
 	/*When the token at it's first position reaches the last posible character of the input string the while loop will end, 
 	for example: ABCDEFGH, token[0] == 'E' for a token size of 4*/
-	while(token[0] != inputString[(inputSize-1) - (groupSize-1)] )
+	while(token[0] != inputString[(inputSize-1) - (GROUP_SIZE-1)] )
 	{
 		printf("%s\n", token);
-		index++; // you'll move through the next chars until you reach the end of the string.
-		if(index == inputSize)// you've reached the end of the string
+		index++; // you'll move through the next chars until you reach the end of the string. ABCD -> ABCE -> ABCF -> ABCG...
+		if(index == inputSize)// you've reached the end of the string for any of the groups. ABCH or BFGH
 		{
-			while(inputSize-range-1 == groupSize-nextTokenBeginAt-1) /* When range reaches the last (groupSize-nextTokenBeginAt-1) chars we'll look for the char that's next to be replaced...*/
-			{//example: AIJKLM will have 4 iterations till we have nextTokenBeginAt == 0, and we'll replace A in the next lines of code
+			while(inputSize-range-1 == GROUP_SIZE-nextTokenBeginAt-1) // to go from AFGH to BCDE
+			{//example: AFGH will have 4 iterations till we have nextTokenBeginAt == 0, and we'll replace A in the next lines of code
 				//
 				position = strchr(inputString, token[nextTokenBeginAt-1]);
 				sprintf(newPosition, "%ld", position-inputString);
@@ -61,37 +67,26 @@ void combinations(char inputString[], const int groupSize)
 				
 			}
 			
-			range++;// range represents the range of chars after the ones in the token to replace the last char.
-			//-range- will move forward each time we've reached the last char of the string with -index-.
-			index = range + (groupSize -1 -nextTokenBeginAt);
+			range++;// range represents the range of chars after the ones in the token to replace the last char. ABCD, range {EFGH}
+			index = range + (GROUP_SIZE -1 -nextTokenBeginAt);
 			
 			int step = 0;/*this loop creates a brand new token using the the new value for range, ABCD becomes ACDE
 			but when -nextTokenBeginAt- is 0 that means we've all the combinations with one char and we'll move to the next one.
-			for example: AEFG becomes BCDE*/
-			for(int a = nextTokenBeginAt; a<groupSize; a++)// a could begin from groupSize-2 to 0
+			for example: AFGH becomes BCDE*/
+			for(int a = nextTokenBeginAt; a<GROUP_SIZE; a++)
 				token[a] = inputString[range+step++];
-			nextTokenBeginAt = groupSize-2;// the one before the last char of token
+			nextTokenBeginAt = GROUP_SIZE-SKIP_LAST_CHAR;// the one before the last char of token
 			
 			//
 			position = strchr(inputString, token[nextTokenBeginAt]);
 			sprintf(newPosition, "%ld", position-inputString );
-			range = atoi(newPosition); // we get the new value of range with the position that, the char at groupSize-2 in token, has in inputString.
+			range = atoi(newPosition); // we get the new value of range with the position
 			//
 		}
-		token[groupSize-1] = inputString[index]; //2) the last char of token will be replaced for the next one in the input string.
+		token[GROUP_SIZE-1] = inputString[index]; //The last char of token will be replaced for a char that is not in the group.
 	}
 	printf("%s\n", token);
 	
 }
 
-int noArguments(int argc, char * argv[], char* version, char* author)
-{
-	if(argc <= 1)
-	{
-		
-		printf("\n%s ver %s by %s\n", argv[0], version, author);
-		exit(EXIT_SUCCESS);
-	}
-	else
-		return 1;
-}
+

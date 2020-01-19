@@ -1,4 +1,4 @@
-/*This program makes a through analysis to find some of the capabalities of a device's implementation. This includes numerical and char types, some basic processing units and a pair of locale settings.
+/*This program makes a through analysis to find some of the capabalities of a device's implementation. This includes numerical and char types, some basic processing units and a couple of locale settings.
 As long as the device supports the #included C standard libraries, you'll be able to get a report of its capabilities. 
 
 As an input you can provide the name of a file; or an empty string "" so all the information will be sent to stdout. 
@@ -18,10 +18,10 @@ int compareints (const void * a, const void * b);
 
 int main(int argc, char *argv[])
 {
-	if(argc == 1)
+	if( argc < 2 )
 		argv[1] = NULL;
 	deviceCapabilitiesAnalizer(argv[1]);
-	return 1;
+	return EXIT_SUCCESS;
 }
 
 void deviceCapabilitiesAnalizer(char *fileName)
@@ -164,7 +164,6 @@ void deviceCapabilitiesAnalizer(char *fileName)
 	fprintf(stream, "Linear searches in a %u length array:%u\n", ARRAY_SIZE, times);
 
 	int * pItem;
-  	
 
 	times = 0;
 	tCounter = clock();
