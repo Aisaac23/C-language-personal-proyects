@@ -6,12 +6,10 @@
 */
 void tokenPermutations(unsigned int newSize, char * permutedToken, void (*printToken)( char *token) );
 void printToken(char *token);
-int noArguments(int argc, char * argv[], char* version, char* author);
+
 
 int main(int argc, char * argv[])
 {	
-	
-	noArguments(argc, argv, "1.0", "Aisaac23");
 	tokenPermutations(strlen(argv[1]), argv[1], printToken);
 	
 	return EXIT_SUCCESS;
@@ -63,15 +61,4 @@ void printToken(char *token)
 	fprintf(tokenFile, ",");
 	fclose(tokenFile);*/
 	
-}
-
-int noArguments(int argc, char * argv[], char* version, char* author)
-{
-	if(argc <= 1)
-	{
-		printf("\n%s ver %s by %s\n", argv[0], version, author);
-		exit(EXIT_SUCCESS);
-	}
-	else
-		return 1;
 }
