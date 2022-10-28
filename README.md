@@ -1,5 +1,5 @@
 # C-language-snippets-and-proyects
-Interesting snippets and personal projects built in C language.
+Interesting snippets and personal projects written in C language.
 
 - combinations.c -> Displays all posible combinations of a string with all unique characters.
 - textAnalizer.c -> Describes multiple aspects of a UTF-8 plain text file.
